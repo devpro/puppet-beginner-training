@@ -1,0 +1,7 @@
+*.rb eol=lf
+*.erb eol=lf
+*.pp eol=lf
+*.sh eol=lf
+*.yaml eol=lf
+*.conf eol=lf
+Puppetfile eol=lf
