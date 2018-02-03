@@ -61,13 +61,22 @@ As usual, when installing components on your laptop, think about launching a new
 
 - **Puppet agent**
 
-    For Windows, it's available from [puppet.com/docs/puppet/5.3/install_windows](https://puppet.com/docs/puppet/5.3/install_windows.html) > [downloads.puppetlabs.com/windows/puppet5/](https://downloads.puppetlabs.com/windows/puppet5/).
+    For Windows, it's available from [puppet.com/docs/install_windows](https://puppet.com/docs/puppet/5.3/install_windows.html) > [downloads.puppetlabs.com/windows](https://downloads.puppetlabs.com/windows/puppet5/).
 
     You can use a name like `puppetmaster-dev` when you're asked to provide a name for the Puppet server.
 
     Right after, stop and disable the puppet agent service that is installed and started by default. On a Developer workstation it is better to have it disabled and run the command manually.
 
     Review and update `C:\ProgramData\PuppetLabs\puppet\etc\puppet.conf` with your environment.
+
+    ```ini
+    [main]
+    server=puppetmaster-dev
+    autoflush=true
+    environment=production
+    [agent]
+    environment=mybranchname
+    ```
 
     Make sure your host file (`C:\Windows\System32\drivers\etc\hosts`) know the Puppet server hostname if not in the DNS of your domain.
 
@@ -110,10 +119,9 @@ r10k puppetfile install
 You don't need to load your files on the Puppet master to test it, you can and should do it before by running `puppet apply` command.
 
 ```bash
-puppet apply --modulepath="modules;site" .\manifests\site.pp
+puppet apply --modulepath="modules;site" --hiera_config="hiera.yaml" .\manifests\site.pp
 ```
 
-You may have issues while running it as an Administrator.
 In case of puppet unknown, even in starting a new DOS window, restart your computer.
 
 You should see something like this:
