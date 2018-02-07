@@ -4,7 +4,7 @@ This repository holds the steps I followed when I did a Puppet training for begi
 
 It is aimed to give a practical example of a Puppet repository, along with the documentation on how to achieve this.
 
-It has been tested on Puppet 5.3 (Open Source) where the puppet server (aka master) is hosted on CentOS 7 and puppet agent on Windows 7 & 10. But you don't need a Puppet server to experiment Puppet code.
+It has been tested on **Puppet 5.3 (Open Source)** where the puppet server (aka master) is hosted on CentOS 7 and puppet agent on Windows 7 & 10. But you don't need a Puppet server to experiment Puppet code.
 
 Enjoyment in what we do is essential, please make sure you are using a nice IDE to edit files and review folder contents (no Notepad++ please...). I recommend to use [Visual Studio Code](https://code.visualstudio.com/), this is free, massively used by the community (and not always Microsoft fans ;)), continuously updated by new cool features (DevOps enabled!). If you do, you just have to install Puppet extension. This documentation has been created on Visual Studio Code that also helps review dynamically a markdown preview (with a live markdown lint).
 
@@ -71,18 +71,34 @@ As usual, when installing components on your laptop, think about launching a new
 
     ```ini
     [main]
-    server=puppetmaster-dev
-    autoflush=true
-    environment=production
+        server=puppetmaster-dev
+        autoflush=true
+        environment=production
     [agent]
-    environment=mybranchname
+        environment=mybranchname
     ```
 
     Make sure your host file (`C:\Windows\System32\drivers\etc\hosts`) know the Puppet server hostname if not in the DNS of your domain.
 
+    ```bash
+    puppet --version
+    # should display the version (puppet help for more options)
+    facter -- version
+    # should display the version (facter --help for more options)
+    ```
+
 - **Puppet Development Kit (PDK)**
 
     It will be easier to do good with with the PDK, that can be found on [puppet.com](https://puppet.com/download-puppet-development-kit).
+
+    Follow instructions on [Installing PDK](https://puppet.com/docs/pdk/1.3/pdk_install.html).
+
+    Open a PowerShell command window:
+
+    ```bash
+    pdk --version
+    # should display the version (pdk help for more options)
+    ```
 
 ## Design
 
