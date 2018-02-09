@@ -37,6 +37,8 @@ As usual, when installing components on your laptop, think about launching a new
 
     Ruby must be installed on your computer in order to be able to test your code before commit (seems obvious, right?). The installation can be found on [rubyinstaller.org](https://rubyinstaller.org/downloads/). At the moment of writing this documentation, the stable version was 2.4.X (do not select 2.5).
 
+    It's important to review some steps of the installation wizard and verify the checkboxes, in particular the one from the last step (this is not required).
+
     ```bash
     ruby -v
     # should display the version
@@ -44,7 +46,7 @@ As usual, when installing components on your laptop, think about launching a new
     # should display the version
     ```
 
-- **r10k**
+- **r10k** ([github](https://github.com/puppetlabs/r10k))
 
     r10k is a component that is used on the Puppet server to convert branches from a git repository to environments folder!
 
@@ -78,7 +80,7 @@ As usual, when installing components on your laptop, think about launching a new
         environment=mybranchname
     ```
 
-    Make sure your host file (`C:\Windows\System32\drivers\etc\hosts`) know the Puppet server hostname if not in the DNS of your domain.
+    Make sure your host file (`C:\Windows\System32\drivers\etc\hosts`) knows the Puppet server hostname if not in the DNS of your domain.
 
     ```bash
     puppet --version
@@ -110,7 +112,7 @@ r10k must be installed on the server and will use your git repository to populat
 
 ## Steps
 
-### Create default structure
+### Create default structure (if you start from scratch)
 
 - Create `data` folder where Hiera data will be stored. Create also `hiera.yaml` file that is your Hiera configuration. Start by writting a `common.yaml` file. It's all about hierarchy!
 
@@ -132,13 +134,13 @@ r10k puppetfile install
 
 ### Check initial setup is ok
 
-You don't need to load your files on the Puppet master to test it, you can and should do it before by running `puppet apply` command.
+You don't need to load your files on the Puppet master to test and validate them. On the contrary, you can and you _should_ do it before, by running `puppet apply` command.
 
 ```bash
 puppet apply --modulepath="modules;site" --hiera_config="hiera.yaml" .\manifests\site.pp
 ```
 
-In case of puppet unknown, even in starting a new DOS window, restart your computer.
+In case of puppet "unknown", even in starting a new DOS window, restart your computer.
 
 You should see something like this:
 
@@ -149,7 +151,29 @@ You should see something like this:
 
 ### Define your computer as a node
 
-Look at site.pp file and update it so your computer is a know node.
+Look at `site.pp` file and update it so your computer is a known node (look at the _TODO_). The node name should be the fully qualified name of your computer, you can use the command `facter fqdn` to verify the value, it's best practice to put it all in lower case.
 
 When successfull, a file call temp.txt will be created at the root folder of your D driver.
-You are free to update the existing code to practice!
+Take some time to understand when it happened, look on internet by searching `puppet file` and `puppet file_line`.
+
+You are now free to update the existing code to practice!
+
+Solutions for the exercises below are documented in this repository but only look at them only to verify or if you tried for a certain period of time (_no pain no gain!_).
+
+### Exercise 1: Hello world
+
+Update the code so that a specific hello world is displayed.
+
+Example:
+
+> Notice: Compiled catalog for xxxx.domain.com in environment production in 0.17 seconds  
+> Notice: Welcome on XXX awesome computer  
+> Notice: /Stage[main]/Main/Node[xxxx.domain.com]/Notify[hey]/message: defined 'message' as 'Welcome on XXX awesome computer'  
+> Notice: Applied catalog in 0.0X seconds
+
+### Exercise 2: Ensure file content
+
+If you didn't touch this part, you should have a temp.txt file created in D:\ (or in another place if you updated the code).
+Add a test line in the text file, delete the existing line and run puppet apply again, what do you see? And if you run it a second time?
+
+Knowing that what we want is to fully control the file content, what changes must we do to achieve this?
